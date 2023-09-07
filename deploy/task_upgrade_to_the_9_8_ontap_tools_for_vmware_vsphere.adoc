@@ -1,0 +1,111 @@
+---
+permalink: deploy/task_upgrade_to_the_9_8_ontap_tools_for_vmware_vsphere.html 
+sidebar: sidebar 
+keywords: Virtual Storage Console, Storage Replication Adapter 
+summary: ここに記載されている手順に従って、既存の9.10以降の環境からONTAP toolsの最新リリースへのインプレースアップグレードを実行できます。 
+---
+= ONTAP ツールの最新リリースにアップグレードします
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+ここに記載されている手順に従って、既存の9.10以降のリリースからONTAP toolsの最新リリースへのインプレースアップグレードを実行できます。
+
+* 必要なもの *
+
+* 最新リリースの ONTAP ツールの .iso ファイルをダウンロードしておく必要があります。
+* ONTAP ツールがアップグレード後に最適に機能するためには、 12GB 以上の RAM を確保する必要があります。
+* vSphere Client のブラウザキャッシュをクリーンアップする必要があります。
++
+link:../deploy/task_clean_the_vsphere_cached_downloaded_plug_in_packages.html["vSphere にキャッシュされているダウンロード済みプラグインパッケージをクリアします"]
+
+
+
+必要に応じて、次の手順を実行して_.iso_ファイルを検証します。これはオプションの手順です。
+
+. Entrust（OTV_ISO_CERT.pem）から発行したコード署名証明書から公開鍵を抽出します。
+OpenSSL x509 - in otv_iso_cert.pem -pubkey-noout>csc-prod-otv-sra-tgz.pub
+. 公開鍵を使用してダイジェスト内の署名を確認します(この手順は、バイナリをインストールする前にエンドユーザシステムで実行する必要があります)。証明書バンドルは導入パッケージに含まれている必要があります）
++
+OpenSSL DGST-SHA256 - Verify CSC-prod-otv-sra-tgz.pub -signature netapp-ontap-tools-for-vmware-vsphere-9.12-9327-upgrade-iso.sig netapp-ontap-tools-for-vmware-vsphere-9.12-9327-upgrade.iso
+
+
+
+VASA Provider のステータスは、アップグレード後も既存の導入環境と同じになります。アップグレード後に要件に基づいて VASA Provider を手動で有効または無効にする必要があります。ただし、従来のデータストアのプロビジョニングやストレージアラームのストレージ機能プロファイルが有効になるため、 VASA Provider は VMware 仮想ボリューム（ vVol ）を使用していない場合でも有効にすることを推奨します。
+
+
+NOTE:  ONTAP toolsの最新リリースへのインプレースアップグレードは、既存の9.10以降のバージョンからのみ実行できます。
+
+
+NOTE: ONTAP tools 9.12をアップグレードすると、ストレージシステムのすべての認証および通信のプロセスが、ONTAP ストレージ証明書を自動信頼することでベーシック認証から証明書ベースの認証に変更されます。ユーザによる操作は不要です。
+
+証明書認証を使用しないストレージシステムの追加は制限されています。
+
+JSONファイルを使用してカスタムで作成したクラスタを対象としたユーザでストレージシステムを追加し、9.12にアップグレードする場合は、を実行します
+アップグレード前にONTAP CLIで次のコマンドを実行して、ONTAP tools for VMware vSphereとONTAP間の証明書ベースの通信を有効にします。
+
+. _security login role create -role <existing-role-name>-cmddirname "security login show"-access all_
+. _security login role create -role <existing-role-name>-cmddirname "security certificate show"-access all_
+. _security login role create -role <existing-role-name>-cmddirname " security certificate install "-access all_
+
+
+JSONファイルを使用してカスタムで作成したSVMスコープのユーザでストレージシステムを追加し、9.12にアップグレードする場合
+アップグレード前に、ONTAP CLIでクラスタ管理者アクセスで次のコマンドを実行して、ONTAP tools for VMware vSphereとONTAPの間の証明書ベースの通信を有効にします。
+
+. _security login role create -role <existing-role-name>-cmddirname "security certificate install"-access all -vserver <vserver-name>_
+. _security login role create -role <existing-role-name>-cmddirname "security certificate show"-access all -vserver <vserver-name>_
+. _security login create -user-or-group-name <user>-application http-authentication-method cert -role <existing-role-name>-vserver <vserver-name>_
+. _security login create -user-or-group-name <user>-application ontapi-authentication-method cert -role <existing-role-name>-vserver <vserver-name>_
+
+
+* 手順 *
+
+. ダウンロードした .iso ファイルを ONTAP ツールにマウントします。
++
+.. [ 設定の編集 *>*DVD/CD-ROM ドライブ *] をクリックします。
+.. ドロップダウンリストから * Datastore ISO * file を選択します。
+.. ダウンロードした .iso ファイルを参照して選択し、 * パワーオン時に接続 * チェックボックスを選択します。
+
+
+. 導入した ONTAP ツールの [Summary] タブにアクセスします。
+. メンテナンスコンソールを起動します。
+. 「メインメニュー」プロンプトで、「option」と入力します `2` [System Configuration]*に入力し、optionを入力します `8` アップグレード*の場合。
++
+アップグレードが終了すると、 ONTAP ツールが再起動します。ONTAP ツールは、アップグレード前と同じ IP アドレスで vCenter Server に登録されます。
+
+. IPv6 アドレスを使用して ONTAP ツールを vCenter Server に登録するには、次の手順を実行する必要があります。
++
+.. ONTAP ツールの登録を解除します。
+.. 登録 * ページを使用して、 ONTAP ツールの IPv6 アドレスを vCenter Server に登録します。
+.. 登録が完了したら、ONTAP toolsとVASA Providerの証明書を再生成します。
+
+
++
+
+IMPORTANT: IPv6 は vCenter Server 6.7 以降でのみサポートされます。
+
+. vSphere Client からログアウトして再度ログインすると、導入した ONTAP ツールが表示されます。
++
+.. 既存の vSphere Web Client または vSphere Client からログアウトし、ウィンドウを閉じます。
+.. vSphere Client にログインします。
++
+vSphere Client でプラグインが更新されるまでに数分かかる場合があります。
+
+
+
+
+
+[NOTE]
+====
+* ONTAP ツール 7.0 から最新バージョンの ONTAP ツールにアップグレードする場合は、既存の VM ストレージポリシーを編集する前にストレージ機能プロファイルを作成する必要があります。プロファイルを作成しないと、値が正しくないか値がないというエラーが表示されることがあります。
+* 以前のバージョンから最新リリースのONTAP toolsにアップグレードすると、が検出されます `vvol.rebalance.threshold` `vvol.propertiesファイルにプロパティがありません。
++
+プロパティのデフォルト値は 85% に設定されています。
+
+* FIPSが有効になっている最新のONTAP toolsリリースにアップグレードしたあとも、FIPSがサポートされていない古いバージョンのvCenterを使用していても、導入は引き続き機能します。
+ただし、 vCenter を最新の FIPS サポートバージョンにアップグレードした場合に、以前のバージョンの ONTAP ツールを使用していれば、 FIPS が vCenter で無効になっていれば導入は機能します。
+
+
+====

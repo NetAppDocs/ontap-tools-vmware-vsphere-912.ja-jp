@@ -1,0 +1,18 @@
+---
+permalink: deploy/concept_how_to_download_ontap_tools.html 
+sidebar: sidebar 
+keywords:  
+summary: VMware vSphere 用の ONTAP ツールの .ova ファイルは、NetApp Support Siteからダウンロードできます。 
+---
+= ONTAP ツールのダウンロード方法
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+はダウンロードできます `.zip` のONTAP tools for VMware vSphereのバイナリ（_.ova_）と署名済み証明書を含むファイル https://mysupport.netapp.com/site/products/all/details/otv/downloads-tab["NetApp Support Site"^]。
+
+.ova ファイルには ONTAP ツールが含まれています。導入が完了すると、VSC、VASA、SRAの製品が環境にインストールされます。導入モデルを決定し、その要件に基づいて VASA Provider と SRA を有効にするかどうかを選択すると、すぐに VSC が起動します。
+
+ONTAP ツールの導入時に SRA を有効にする場合は、 Site Recovery Manager （ SRM ）サーバに SRA プラグインをインストールしておく必要があります。SRA プラグインのインストールファイルは、ソフトウェアのダウンロードセクションの * Storage Replication Adapter for ONTAP * メニューからダウンロードできます。

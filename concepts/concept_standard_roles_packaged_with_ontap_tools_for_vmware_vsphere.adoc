@@ -1,0 +1,88 @@
+---
+permalink: concepts/concept_standard_roles_packaged_with_ontap_tools_for_vmware_vsphere.html 
+sidebar: sidebar 
+keywords:  
+summary: vCenter Serverの権限とRole-Based Access Control（RBAC；ロールベースアクセス制御）を簡単に使用できるように、ONTAP toolsには、ONTAP toolsの主要なタスクを実行できる標準のONTAP toolsロールが用意されています。タスクを実行せずに情報を表示できる読み取り専用ロールもあります。 
+---
+= ONTAP ツールに付属の標準ロール
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+vCenter Serverの権限とRole-Based Access Control（RBAC；ロールベースアクセス制御）を簡単に使用できるように、ONTAP toolsには、主要なONTAPツールタスクを実行できる標準のONTAP toolsロールが用意されています。タスクを実行せずに情報を表示できる読み取り専用ロールもあります。
+
+標準のONTAP toolsロールには、ユーザがONTAP toolsタスクを実行するために必要なONTAP tools固有の権限とvCenter Server標準の権限の両方が含まれています。また、サポートされるどのバージョンの vCenter Server でも必要な権限が付与されるように設定されています。
+
+管理者は、必要に応じてこれらのロールをユーザに割り当てることができます。
+
+
+NOTE: ONTAP toolsを最新バージョンにアップグレードすると、新しいバージョンのツールで使用できるように標準ロールが自動的にアップグレードされます。
+
+ONTAP toolsの標準ロールを表示するには、vSphere Clientの[ホーム]ページで*[ロール]*をクリックします。
+
+ONTAP toolsのロールで実行できるタスクは次のとおりです。
+
+|===
+
+
+| * 役割 * | * 概要 * 
+
+
+ a| 
+VSC管理者
+ a| 
+すべてのONTAP toolsタスクを実行するために必要なvCenter Server標準の権限とONTAP tools固有の権限がすべて含まれています。
+
+
+
+ a| 
+VSC 読み取り専用
+ a| 
+ONTAP toolsへの読み取り専用アクセスを許可します。これらのユーザは、アクセス制御されたONTAP toolsアクションを実行できません。
+
+
+
+ a| 
+VSC によるプロビジョニング
+ a| 
+ストレージのプロビジョニングに必要なvCenter Server標準の権限とONTAP tools固有の権限がすべて含まれています。次のタスクを実行できます。
+
+* 新しいデータストアを作成する
+* データストアを削除
+* ストレージ機能プロファイルに関する情報を表示する
+
+
+|===
+
+
+== ONTAP toolsの標準ロールの使用に関するガイドライン
+
+VMware vSphere の標準的な ONTAP ツールを使用する場合は、一定のガイドラインに従う必要があります。
+
+標準ロールは直接変更しないでください。このオプションを選択すると、アップグレードするたびにONTAP toolsによって変更が上書きされます。ONTAP toolsをアップグレードするたびに、インストーラによって標準ロール定義が更新されます。これにより、使用しているバージョンのONTAP toolsだけでなく、サポートされるすべてのバージョンのvCenter Serverでロールが最新の状態に維持されます。
+
+ただし、標準のロールを使用して環境に合わせたロールを作成することもできます。これを行うには、ONTAP toolsの標準ロールをコピーしてから、コピーしたロールを編集する必要があります。新しいロールを作成すると、ONTAP tools Windowsサービスを再起動またはアップグレードしても、このロールを維持できます。
+
+ONTAP toolsの標準ロールを使用する方法には、次のようなものがあります。
+
+* ONTAP toolsのすべてのタスクには、標準のONTAP toolsロールを使用します。
++
+このシナリオでは、標準ロールには、ONTAP toolsタスクを実行するために必要なすべての権限が含まれています。
+
+* 複数のロールを組み合わせてユーザが実行できるタスクを拡張する。
++
+ONTAP toolsの標準ロールの方が細かすぎる場合は、複数のロールを含む上位レベルのグループを作成してロールを拡張できます。
+
++
+ユーザがvCenter Server標準の追加権限を必要とするONTAP tools以外のタスクを実行する必要がある場合は、それらの権限を提供するロールを作成してグループに追加できます。
+
+* より細分化されたロールを作成します。
++
+標準のONTAP toolsロールよりも制限の厳しいロールを実装する必要がある場合は、ONTAP toolsロールを使用して新しいロールを作成できます。
+
++
+この場合は、必要なONTAP toolsロールのクローンを作成し、そのクローンロールを編集してユーザに必要な権限のみを付与します。
+
+

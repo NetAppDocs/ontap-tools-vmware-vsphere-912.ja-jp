@@ -1,0 +1,22 @@
+---
+permalink: configure/reference_configure_the_vsc_preferences_files.html 
+sidebar: sidebar 
+keywords: preferences files 
+summary: プリファレンスファイルには、 VMware vSphere の処理用に ONTAP ® ツールを制御する設定が含まれています。ほとんどの場合、これらのファイルの設定を変更する必要はありません。ONTAP toolsで使用されるプリファレンスファイルを把握しておくと役立ちます。 
+---
+= ONTAPツールのプリファレンスファイルの設定
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+プリファレンスファイルには、 VMware vSphere の処理用の ONTAP ツールを制御する設定が含まれています。ほとんどの場合、これらのファイルの設定を変更する必要はありません。ONTAP toolsで使用されるプリファレンスファイルを把握しておくと役立ちます。
+
+ONTAPツールにはいくつかのプリファレンスファイルがあります。これらのファイルには、ONTAPツールがさまざまな処理を実行する方法を決定するエントリキーと値が含まれています。ONTAP toolsで使用されるプリファレンスファイルの一部を次に示します。
+
+`/opt/netapp/vscserver/etc/kamino/kaminoprefs.xml`
+
+`/opt/netapp/vscserver/etc/vsc/vscPreferences.xml`
+
+状況によっては、プリファレンスファイルの変更が必要になることがあります。たとえば、iSCSI、NFS、またはNVMe/FCを使用していて、ESXiホストとストレージシステムでサブネットが異なる場合は、のプリファレンスファイルを変更する必要があります。プリファレンスファイルの設定を変更しないと、ONTAPツールでデータストアをマウントできないためにデータストアのプロビジョニングが失敗します。

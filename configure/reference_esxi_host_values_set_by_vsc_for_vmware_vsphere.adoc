@@ -1,0 +1,121 @@
+---
+permalink: configure/reference_esxi_host_values_set_by_vsc_for_vmware_vsphere.html 
+sidebar: sidebar 
+keywords:  
+summary: VMware vSphere 用の ONTAP ツールを使用して ESXi ホストにタイムアウト値やその他の値を設定することで、最適なパフォーマンスが得られ、フェイルオーバーが正常に実行されるようにすることができます。ONTAP ツールで設定される値は、ネットアップ独自のテスト結果に基づいています。 
+---
+= ONTAP ツールを使用して設定される ESXi ホストの値
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+VMware vSphere 用の ONTAP ツールを使用して ESXi ホストにタイムアウト値やその他の値を設定することで、最適なパフォーマンスが得られ、フェイルオーバーが正常に実行されるようにすることができます。ONTAP ツールで設定される値は、ネットアップ独自のテスト結果に基づいています。
+
+ESXi ホストでは、次の値を設定できます。
+
+
+
+== ESXi の高度な設定
+
+* * VMFS3.HardwareAcceleratedLocking *
++
+この値を 1 に設定します。
+
+* *VMFS3.EnableBlockDelete *
++
+この値を0に設定します。
+
+
+
+
+
+== NFS 設定
+
+* * Net.TcpipHeHeapSize *
++
+この値を32に設定します。
+
+* * Net.TcpipHeapMax *
++
+この値を1024MBに設定します。
+
+* * NFS.MaxVolumes *
++
+この値を256に設定します。
+
+* * NFS41.MaxVolumes *
++
+この値を256に設定します。
+
+* * NFS.MaxQueueDepth *
++
+キューイングのボトルネックを回避するには、この値を128以上に設定します。
+
+* * nfs.HeartbeatMaxFailures*
++
+すべてのNFS構成で、この値を10に設定します。
+
+* * nfs.HeartbeatFrequency*
++
+すべてのNFS構成で、この値を12に設定します。
+
+* * nfs.HeartbeatTimeout *
++
+すべてのNFS構成で、この値を5に設定します。
+
+
+
+
+
+== FC / FCoE 設定
+
+* * パス選択ポリシー *
++
+ALUAを使用するFCパスを使用する場合は、この値を「RR」（ラウンドロビン）に設定します。
+
++
+他のすべてのコンフィギュレーションでは、この値を"fixed"に設定します。
+
++
+この値を「 RR 」に設定すると、最適化されたすべてのアクティブなパスでロード・バランシングを行うことができます。値「 fixed 」は、 ALUA に対応していない古い構成に使用され、プロキシ I/O の防止に役立ちます
+
+* * Disk.QFullSampleSize *
++
+すべての構成でこの値を32に設定します。この値を設定すると、 I/O エラーの防止に役立ちます。
+
+* * Disk.QFullThreshold *
++
+すべての構成でこの値を8に設定します。この値を設定すると、 I/O エラーの防止に役立ちます。
+
+* * Emulex FC HBA タイムアウト *
++
+デフォルト値を使用します。
+
+* * QLogic FC HBA タイムアウト *
++
+デフォルト値を使用します。
+
+
+
+
+
+== iSCSI 設定
+
+* * パス選択ポリシー *
++
+すべてのiSCSIパスに対してこの値を「RR」に設定します。
+
++
+この値を「 RR 」に設定すると、最適化されたすべてのアクティブなパスでロード・バランシングを行うことができます。
+
+* * Disk.QFullSampleSize *
++
+すべての構成でこの値を32に設定します。この値を設定すると、 I/O エラーの防止に役立ちます。
+
+* * Disk.QFullThreshold *
++
+すべての構成でこの値を8に設定します。この値を設定すると、 I/O エラーの防止に役立ちます。
+
+

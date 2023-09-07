@@ -1,0 +1,40 @@
+---
+permalink: concepts/concept_manage_disaster_recovery_setup_using_srm.html 
+sidebar: sidebar 
+keywords:  
+summary: VMware の Site Recovery Manager\ （ SRM\ ）とともに、 vCenter Server でディザスタリカバリの設定を作成および管理できます。 
+---
+= ディザスタリカバリを設定する
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+ディザスタリカバリの設定は、 VMware の Site Recovery Manager （ SRM ）とともに vCenter Server で作成および管理できます。
+
+VASA Provider に Storage Replication Adapter （ SRA ）の機能が組み込まれました。データセンターで VVOL データストアを設定している場合は、 VVOL データストアのリカバリ用に、ディザスタリカバリ用に SRA を別途インストールする必要はありません。Site Recovery Manager （ SRM ）で、保護対象サイトとリカバリサイトをペアリングする必要があります。サイトをペアリングしたら、 SRM の次の設定作業としてアレイペアを設定します。アレイペアにより、 SRM がストレージシステムと通信してデバイスとデバイスのレプリケーションを検出できるようになります。アレイペアを設定する前に、まず SRM でサイトペアを作成する必要があります。
+
+このリリースの ONTAP ツールには、ディザスタリカバリに同期 SnapMirror 設定を使用するオプションがあります。
+
+
+NOTE: VMware Site Recovery Manager （ SRM ）では、 VVOL データストアのディザスタリカバリの管理に SRA は使用されません。代わりに、 ONTAP 9.7 以降のクラスタの VVOL データストアのレプリケーションとフェイルオーバー制御に VASA Provider を使用します。
+
+を参照してください link:../protect/task_enable_storage_replication_adapter.html["Storage Replication Adapter を有効にする"] 手順 のセクションを参照してください。
+
+.quick_resync機能のアクティブ化
+quick_resyncフラグを有効にすると、SRAで再保護とリストアの処理を実行できます。これは、非同期SnapMirror関係にあるボリュームから作成されたデータストアにのみ該当します。quick_resyncフラグを指定すると、再同期によってストレージ効率化のオーバーヘッドが発生しないため、デスティネーションボリュームの再同期時間が短縮されます。
+新しいデータの転送前。
+quick_resyncはデフォルトでは有効になっていません。quick_resyncフラグを有効にすることを推奨します。
+
+* 再同期のソースでボリューム効率化が有効になっていない場合。
+* 再同期時間を短縮することが、ネットワークで可能なすべてのストレージ効率を維持するよりも重要な場合。
+
+
+quick_resyncフラグを有効にするには、次の手順に従います。
+
+.手順
+. コントロールパネル（_https://<IP address>：9083_）にログインし、[WebベースのCLIインターフェイス]をクリックします。
+. コマンドを実行します `vp updateconfig -key=snapmirror.quick.resync.enabled -value=true`。
+. コマンドを実行します `vp reloadconfig`。
+

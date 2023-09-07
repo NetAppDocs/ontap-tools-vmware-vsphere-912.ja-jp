@@ -1,0 +1,38 @@
+---
+permalink: protect/task_configure_sra_on_srm_appliance.html 
+sidebar: sidebar 
+keywords:  
+summary: SRM アプライアンスを導入したら、 SRM アプライアンスに SRA を設定する必要があります。SRA を正しく設定すると、ディザスタリカバリ管理のために SRM アプライアンスが SRA と通信できるようになります。SRM アプライアンスと SRA の間の通信を有効にするためには、 ONTAP ツールのクレデンシャル（ IP アドレスと管理者パスワード）を SRM アプライアンスに保存する必要があります。 
+---
+= SRM アプライアンスで SRA を設定する
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+SRM アプライアンスを導入したら、 SRM アプライアンスに SRA を設定する必要があります。SRA を正しく設定すると、ディザスタリカバリ管理のために SRM アプライアンスが SRA と通信できるようになります。SRM アプライアンスと SRA の間の通信を有効にするためには、 ONTAP ツールのクレデンシャル（ IP アドレスと管理者パスワード）を SRM アプライアンスに保存する必要があります。
+
+* 必要なもの *
+
+.tar.gz ファイルをからダウンロードしておく必要があります https://mysupport.netapp.com/site/products/all/details/otv/downloads-tab["NetApp Support Site"]。
+
+* このタスクについて *
+
+SRM アプライアンスで SRA を設定すると、 SRA クレデンシャルが SRM アプライアンスに保存されます。
+
+* 手順 *
+
+. SRM アプライアンス画面で、 * Storage Replication Adapter * > * New Adapter * をクリックします。
+. SRM に .tar.gz_file をアップロードします。
+. アダプタを再スキャンして、 [SRM Storage Replication Adapters] ページで詳細が更新されていることを確認します。
+. putty を使用して、管理者アカウントで SRM アプライアンスにログインします。
+. 次のコマンドを使用してrootユーザに切り替えます。 `su root`
+. コマンドを実行します `cd /var/log/vmware/srm` をクリックして、ログディレクトリに移動します。
+. ログの場所で次のコマンドを入力して、SRAで使用されるDocker IDを取得します。 `docker ps -l`
+. コンテナIDにログインするには、次のコマンドを入力します。 `docker exec -it -u srm <container id> sh`
+. 次のコマンドを使用して、SRMにONTAP toolsのIPアドレスとパスワードを設定します。 `perl command.pl -I <otv-IP> administrator <otv-password>`
++
+ストレージクレデンシャルが保存されたことを示す成功メッセージが表示されます。SRA は、指定された IP アドレス、ポート、およびクレデンシャルを使用して SRA サーバと通信できます。
+
+

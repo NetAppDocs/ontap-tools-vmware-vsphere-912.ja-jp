@@ -1,0 +1,67 @@
+---
+permalink: concepts/concept_how_to_configure_data_ontap_role_based_access_control_for_vsc_for_vmware_vsphere.html 
+sidebar: sidebar 
+keywords:  
+summary: ONTAP tools for VMware vSphereでロールベースアクセス制御を使用する場合は、ストレージシステムでONTAPのRBACを設定する必要があります。ONTAP RBAC 機能を使用すると、アクセス権限を制限したカスタムユーザアカウントを 1 つ以上作成できます。 
+---
+= VMware vSphere 用の ONTAP ツール用に ONTAP の RBAC を設定する方法
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+VMware vSphere 用の ONTAP ツールでロールベースアクセス制御を使用する場合は、ストレージシステムで ONTAP RBAC を設定する必要があります。ONTAP RBAC 機能を使用すると、アクセス権限を制限したカスタムユーザアカウントを 1 つ以上作成できます。
+
+ONTAP toolsとSRAは、クラスタレベルまたはStorage Virtual Machine（SVM）レベルでストレージシステムにアクセスできます。クラスタレベルでストレージシステムを追加する場合、必要なすべての機能を使用するには、管理者ユーザのクレデンシャルを指定する必要があります。SVM の詳細を直接追加してストレージシステムを追加する場合は、「 vsadmin 」ユーザには特定のタスクを実行するために必要なすべてのロールと機能が付与されるわけではないことに注意してください。
+
+VASA Provider は、クラスタレベルでのみストレージシステムにアクセスできます。特定のストレージコントローラでVASA Providerが必要な場合は、ONTAPツールまたはSRAを使用している場合でも、クラスタレベルでストレージシステムをONTAP toolsに追加する必要があります。
+
+新しいユーザを作成し、クラスタまたは SVM を ONTAP ツールに接続するには、次の作業を行う必要があります。
+
+* ONTAP System Manager 9.8P1以降を使用して、クラスタ管理者またはSVM管理者ロールを作成します。
+を参照してください link:../configure/task_configure_user_role_and_privileges.html["ユーザロールと権限を設定"] を参照してください。
+* ONTAP を使用して、ロールが割り当てられ、適切なアプリケーションが設定されたユーザを作成します
++
+作成したストレージシステムのクレデンシャルは、ONTAP tools用にストレージシステムを設定する際に必要になります。ONTAP tools用にストレージシステムを設定するには、ONTAP toolsでクレデンシャルを入力します。これらのクレデンシャルを使用してストレージシステムにログインすると、クレデンシャルの作成時にONTAPで設定したONTAP tools機能に対する権限が付与されます。
+
+* ONTAP toolsにストレージシステムを追加し、作成したユーザのクレデンシャルを指定します
+
+
+
+
+== ONTAP toolsのロール
+
+ONTAP toolsでは、ONTAPの権限を次のONTAP toolsロールに分類します。
+
+* 検出
++
+接続されているすべてのストレージコントローラを検出できます
+
+* ストレージを作成します
++
+ボリュームおよび論理ユニット番号（ LUN ）を作成できます
+
+* ストレージを変更します
++
+ストレージシステムのサイズ変更と重複排除を実行できます
+
+* ストレージを破棄します
++
+ボリュームおよび LUN を破棄できます
+
+
+
+
+
+== VASA Provider ロール
+
+クラスタレベルで作成できるのは Policy Based Management のみです。ストレージ機能プロファイルを使用してポリシーベースでストレージを管理できます。
+
+
+
+== SRAロール
+
+SRA では、 ONTAP 権限をクラスタレベルまたは SVM レベルで SAN または NAS ロールに分類します。これにより、ユーザは SRM 処理を実行できるようになります。
+
+クラスタをONTAP toolsに追加するときに、ONTAPツールでONTAP RBACロールの権限の初期検証が実行されます。直接接続のSVMストレージIPを追加した場合、ONTAP toolsでは初期検証は実行されません。ONTAP toolsでは、タスクワークフローの後半で権限がチェックされて適用されます。

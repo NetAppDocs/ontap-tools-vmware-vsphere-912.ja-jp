@@ -1,0 +1,53 @@
+---
+permalink: deploy/concept_installation_workflow_for_existing_users_of_ontap_tools.html 
+sidebar: sidebar 
+keywords:  
+summary: VMware vSphere 用の ONTAP ツール 9.x リリースでは、最新バージョンへのインプレースアップグレードがサポートされています。 
+---
+= ONTAP ツールの既存ユーザ向けの導入ワークフロー
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+VMware vSphere 用の ONTAP ツール 9.x リリースでは、最新バージョンへのインプレースアップグレードがサポートされています。
+
+Virtual Storage Console 6.x 、 Storage Replication Adapter 2.x 、 3.x 、 4.x 、 VASA Provider 6.x などの個々のアプリケーションの以前のリリースでは、異なるアップグレードプロセスが使用されます。これらの古いバージョンのVSC、VASA Provider、SRAが環境にインストールされている場合は、テクニカルサポートに連絡して次の処理を実行してください。
+
+. 最新リリースの ONTAP ツールを導入します。
+. 既存の設定データを移行します。
++
+設定データには、ストレージシステムのクレデンシャルとに表示される設定が含まれます `kaminoprefs.xml` および `vscPreferences.xml`   ファイル。
+
+
+
+link:../configure/reference_set_ipv4_or_ipv6.html["プリファレンスファイルを使用して IPv4 または IPv6 を設定してください"]
+
+多くの場合、設定データを移行する必要はありません。ただし、以前にプリファレンスファイルをカスタマイズした場合は、それらのファイルを確認し、新しく導入した ONTAP ツールに対しても同様の変更を行うことを推奨します。新しく導入したONTAP ツールにストレージシステムを追加し、その際にクレデンシャルを指定できます。
+
+VASA Provider 6.X からアップグレードする場合は、アップグレード前に VASA Provider の登録を解除する必要があります。詳細については、ご使用のリリースのドキュメントを参照してください。
+
+SRA 4.0以前からアップグレードする場合は、次の手順を実行します。
+
+* SRA 4.0P1 を使用している場合は、まず SRA 9.6 にアップグレードしてから、 SRA 9.6 リリースのインプレースアップグレードを実行する必要があります。あとで、 ONTAP ツールの最新リリースにアップグレードできます。
++
+link:../deploy/task_upgrade_to_the_9_8_ontap_tools_for_vmware_vsphere.html["ONTAP ツールの最新リリースにアップグレードします"]
+
+* SRA 2.1 または 3.0 を使用している場合は、最初に既存のサイトの設定をメモしておく必要があります。新規の導入と移行については、テクニカルサポートにお問い合わせください。
++
+ONTAP リリース向けStorage Replication Adapter（SRA）4.0でもVASA Providerが使用されるため、VASA Providerの登録を解除してから最新バージョンのONTAP toolsを導入する必要があります。サーバーの以前のリリース (`.ova`）は、アップグレードが完了したら削除できます。
+
+
+
+VASA Providerを導入している場合は、既存の環境からのアップグレード後に、を使用してONTAP toolsのメモリサイズを12GBに設定する必要があります `Edit Settings` オプション仮想メモリの予約も変更する必要があります。メモリサイズを変更するには、仮想マシンの電源をオフにする必要があります。
+
+VSC 、 VASA Provider 、 SRA 仮想アプライアンス 7.2 または 7.2.1 が稼働している場合は、統合アプライアンス 9.7P1 以降のリリースに直接アップグレードできません。最初に既存の環境を仮想アプライアンス 9.7 にアップグレードしてから、最新リリースにアップグレードする必要があります。
+
+ONTAP tools 9.10以降にアップグレードするには、仮想アプライアンス9.7P1以降を実行している必要があります。  仮想アプライアンス 9.7P1 より前のバージョンからのアップグレードはサポートされていません。
+
+最新リリースのONTAP toolsを導入する場合は、のトピックを参照してください link:../deploy/concept_space_and_sizing_requirements_for_ontap_tools_for_vmware_vsphere.html["ONTAP ツールのスペースとサイジングの要件"]。トピック link:../deploy/task_upgrade_to_the_9_8_ontap_tools_for_vmware_vsphere.html["ONTAP ツールの最新リリースにアップグレードします"] インプレースアップグレードの実行方法については、を参照してください。
+
+* 関連情報 *
+
+https://mysupport.netapp.com/site/tools[]

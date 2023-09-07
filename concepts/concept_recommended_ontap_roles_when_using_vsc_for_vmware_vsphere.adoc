@@ -1,0 +1,43 @@
+---
+permalink: concepts/concept_recommended_ontap_roles_when_using_vsc_for_vmware_vsphere.html 
+sidebar: sidebar 
+keywords:  
+summary: VMware vSphere およびロールベースアクセス制御（ RBAC ）用の ONTAP ® ツールを使用する際に推奨される ONTAP ロールを設定できます。これらのロールには、ONTAP toolsタスクで実行するストレージ処理に必要なONTAP権限が含まれています。 
+---
+= VMware vSphere 用の ONTAP ツールを使用する際に推奨される ONTAP ロール
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+VMware vSphere および Role-Based Access Control （ RBAC ；ロールベースアクセス制御）用の ONTAP ツールを使用する際に推奨される ONTAP ロールをいくつか設定できます。これらのロールには、ONTAP toolsタスクで実行するストレージ処理に必要なONTAP権限が含まれています。
+
+新しいユーザロールを作成するには、 ONTAP を実行しているストレージシステムに管理者としてログインする必要があります。ONTAP System Manager 9.8P1以降を使用してONTAP ロールを作成できます。を参照してください
+link:../configure/task_configure_user_role_and_privileges.html["ユーザロールと権限を設定"] を参照してください。
+
+各 ONTAP ロールには、ロールのクレデンシャルを構成するユーザ名とパスワードのペアが関連付けられています。このクレデンシャルを使用してログインしないと、ロールに関連付けられたストレージ処理にアクセスできません。
+
+セキュリティ対策として、ONTAP tools固有のONTAPロールは階層構造になっています。最初のロールは最も制限のあるロールで、ONTAP toolsの最も基本的なストレージ処理に関連する権限だけが含まれます。次のロールには、そのロール独自の権限と、前のロールに関連付けられているすべての権限が含まれます。以降、上位のロールほど制限が少なく、より多くのストレージ処理をサポートします。
+
+ONTAP toolsを使用する際に推奨されるONTAP RBACロールの一部を次に示します。ロールを作成したら、仮想マシンのプロビジョニングなど、ストレージに関するタスクを実行する必要があるユーザにそのロールを割り当てることができます。
+
+. 検出
++
+ストレージシステムを追加できます。
+
+. ストレージを作成します
++
+ストレージを作成できます。また、 Discovery ロールに関連付けられているすべての権限が含まれます。
+
+. ストレージを変更します
++
+ストレージを変更できます。また、 Discovery ロールと Create Storage ロールに関連付けられているすべての権限が含まれます。
+
+. ストレージを破棄します
++
+ストレージを破棄できます。また、 Discovery ロール、 Create Storage ロール、 Modify Storage ロールに関連付けられているすべての権限が含まれます。
+
+
+
+VASA Provider for ONTAP を使用する場合は、 Policy-Based Management （ PBM ；ポリシーベース管理）ロールも設定します。ストレージポリシーを使用してストレージを管理できます。このロールを使用するには、「検出」ロールも設定する必要があります。

@@ -1,0 +1,51 @@
+---
+permalink: configure/task_refresh_the_storage_system_display.html 
+sidebar: sidebar 
+keywords:  
+summary: ONTAP®tools for VMware vSphereの更新機能を使用して、ストレージシステムに関する情報を更新し、ONTAP toolsにストレージシステムを検出させることができます。 
+---
+= ストレージシステムの表示を更新します
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+ONTAP®tools for VMware vSphereの更新機能を使用して、ストレージシステムに関する情報を更新し、ONTAP toolsにストレージシステムを検出させることができます。
+
+* このタスクについて *
+
+。 `refresh` オプションは、認証エラーの発生後にストレージシステムのデフォルトクレデンシャルを変更した場合に便利です。ストレージシステムからの報告後にストレージシステムのクレデンシャルを変更した場合は、常に更新処理を実行する必要があります `Authentication Failure Status`。更新処理中、ONTAP toolsは新しいクレデンシャルを使用してストレージシステムへの接続を試みます。
+
+システムの設定によっては、この処理が完了するまでに時間がかかることがあります。
+
+* 手順 *
+
+. VMware vSphere Clientの[ホーム]ページで、*[ストレージ]*をクリックします。
+. 更新を開始します。
++
+|===
+
+
+| * この場所が ...* の場合 | * クリック ...* 
+
+
+ a| 
+Virtual Storage Console の略
+ a| 
+[ すべて再検出（ Rediscover All ） ] アイコン
+
+
+
+ a| 
+データセンター
+ a| 
+データセンターを右クリックし、*[NetApp ONTAP tools]*>*[ホストデータとストレージデータの更新]*をクリックします。
+
+|===
+. [ ホストおよびストレージデータの更新 ] ダイアログ・ボックスで、 [OK] をクリックします。
++
+データセンター内のホストとストレージシステムの数によっては、検出に数分かかることがあります。この検出処理はバックグラウンドで実行されます。
+
+. [ 成功（ Success ） ] ダイアログボックスの * OK * をクリックする。
+

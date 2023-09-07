@@ -1,0 +1,34 @@
+---
+permalink: manage/task_collect_the_log_files.html 
+sidebar: sidebar 
+keywords:  
+summary: ONTAP®tools for VMware vSphereのログファイルは、ONTAP toolsのグラフィカルユーザインターフェイス\（GUI\）のオプションから収集できます。テクニカルサポートに問題のトラブルシューティングを依頼すると、ログファイルの収集を求められることがあります。 
+---
+= ログファイルを収集します
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+ONTAP tools for VMware vSphereのログファイルは、ONTAP toolsのグラフィカルユーザインターフェイス（GUI）のオプションで収集できます。テクニカルサポートに問題のトラブルシューティングを依頼すると、ログファイルの収集を求められることがあります。
+
+* このタスクについて *
+
+VASA Provider のログファイルが必要な場合は、 Vendor Provider Control Panel 画面からサポートバンドルを生成できます。このページは VASA Provider のメンテナンスメニューの一部で、仮想アプライアンスのコンソールからアクセスできます。
+
+`\https://vm_ip:9083`
+
+ONTAP tools for VMware vSphereのログファイルを収集するには、ONTAP tools GUIの「ONTAP tools for VMware vSphereログのエクスポート」機能を使用します。VASA Providerを有効にしてONTAP Tools for VMware vSphere Logバンドルを収集すると、ONTAP Tools for VMware vSphere LogバンドルにもVPログが含まれます。次の手順では、ONTAP tools for VMware vSphereのログファイルを収集する方法を説明します。
+
+* 手順 *
+
+. ONTAP toolsのホームページで、*[設定]*>*[VMware vSphereログ用ONTAPツールのエクスポート]*をクリックします。
++
+この処理には数分かかることがあります。
+
+. プロンプトが表示されたら、ローカルコンピュータにファイルを保存します。
++
+これで、テクニカルサポートに .zip ファイルを送ることができます。
+
+

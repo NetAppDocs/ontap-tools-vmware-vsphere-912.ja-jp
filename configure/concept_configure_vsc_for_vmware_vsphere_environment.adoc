@@ -1,0 +1,23 @@
+---
+permalink: configure/concept_configure_vsc_for_vmware_vsphere_environment.html 
+sidebar: sidebar 
+keywords:  
+summary: ONTAPツールはさまざまな環境をサポートしています。これらの環境の機能によっては、追加の設定が必要になることがあります。 
+---
+= VMware vSphere 用の ONTAP ツールを設定します
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+ONTAPツールはさまざまな環境をサポートしています。これらの環境の機能によっては、追加の設定が必要になることがあります。
+
+ESXiホスト、ゲストオペレーティングシステム、およびONTAPツールを設定するには、次のタスクの一部を実行する必要があります。
+
+* UNMAP 設定を含む ESXi ホストの設定の確認
+* ゲストオペレーティングシステムのタイムアウト値の追加
+* ONTAP toolsのSSL証明書の再生成
+* ストレージ機能プロファイルとしきい値アラームの作成
+* 異なるサブネット間でのデータストアのマウントを有効にするためのプリファレンスファイルの変更
+
